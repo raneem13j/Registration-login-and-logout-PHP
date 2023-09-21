@@ -4,7 +4,7 @@
 $dbHost = 'localhost'; // Change to your MySQL host if different
 $dbName = 'useraccounts';
 $dbUser = 'root';
-$dbPass = '12345';
+$dbPass = '';
 
 // Establish a database connection
 try {
