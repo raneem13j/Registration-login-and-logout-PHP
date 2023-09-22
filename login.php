@@ -19,6 +19,9 @@ if (isset($_POST['login'])) {
     } else {
         // Login failed
         $error = "Invalid username or password";
+        header("Location: home.php?error=" . urlencode($error)); // Redirect with error message
+        exit();
     }
 }
 ?>
+

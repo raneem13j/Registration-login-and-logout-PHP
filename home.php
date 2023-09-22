@@ -7,33 +7,31 @@
     <link rel= "stylesheet" href= "style.css">
 </head>
 <body>
-<div id="response">
-        <?php  
-        if (isset($_POST['submit'])) {
-            $fullName = $_POST['fullName'];
-            $userName = $_POST['userName'];
-            $password = sha1($_POST['passwor']); // Typo: should be 'password'
-            $confirmPassword = $_POST['confirmPassword'];
-            $email = $_POST['email'];
-            $phone = $_POST['phone'];
-            $dateOfBirth = $_POST['dateOfBirth'];
-        
-            $sql = "INSERT INTO users(fullName, userName, passwor, confirmPassword, email, phone, dateOfBirth) VALUES (?, ?, ?, ?, ?, ?, ?)";
-            $stmtinsert = $db->prepare($sql);
-            $result = $stmtinsert->execute([$fullName, $userName, $password, $confirmPassword, $email, $phone, $dateOfBirth]);
-        
-            if ($result) {
-                echo "Successfully saved, login please";
-            } else {
-                echo "There were errors while saving the data.";
-            }
-        }
-        ?>
-    </div>
     <div class="left">
         <!-- Registration form goes here -->
         <h2>Registration</h2>
         <form action="home.php" method="post">
+              <?php  
+             if (isset($_POST['submit'])) {
+               $fullName = $_POST['fullName'];
+               $userName = $_POST['userName'];
+               $password = sha1($_POST['passwor']);
+               $confirmPassword = $_POST['confirmPassword'];
+               $email = $_POST['email'];
+               $phone = $_POST['phone'];
+               $dateOfBirth = $_POST['dateOfBirth'];
+        
+               $sql = "INSERT INTO users(fullName, userName, passwor, confirmPassword, email, phone, dateOfBirth) VALUES (?, ?, ?, ?, ?, ?, ?)";
+               $stmtinsert = $db->prepare($sql);
+               $result = $stmtinsert->execute([$fullName, $userName, $password, $confirmPassword, $email, $phone, $dateOfBirth]);
+        
+            if ($result) {
+                  echo "Successfully saved, login please";
+               } else {
+                  echo "There were errors while saving the data.";
+               }
+            }
+               ?>
            
             <!-- Add registration form fields here -->
             <label>Full Name</label>
@@ -61,9 +59,11 @@
         <!-- Login form goes here -->
         <h2>Login</h2>
         <form action="login.php" method="post">
-        <?php if(isset($error)){ ?>
-        <p class="error"><?php echo $error; ?></p>
-        <?php } ?>
+
+              <?php if(isset($_GET['error'])){ ?>
+                <p class="error"><?php echo $_GET['error']; ?></p>
+                <?php } ?>
+
             <!-- Add login form fields here -->
             <label>Username</label>
             <input type="text" name="userName" placeholder= "Username" required/>
